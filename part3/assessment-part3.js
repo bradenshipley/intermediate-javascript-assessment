@@ -12,10 +12,11 @@
 // with the animal as the context, and 'Trogdor' as a parameter.
 // return the result of your updateAnimal invocation
 
-// CODE HERE...
-
-
-
+function callBinding(magicAnimals, updateAnimal, id) {
+  let animal = magicAnimals.find(el => { el == id })
+  return updateAnimal.call(animal, 'Trogdor')
+  // return bound('Trogdor')
+}
 // *************
 // * PROBLEM 2 *
 // *************
@@ -27,7 +28,14 @@
 // with the context of the animal, and the array ['being majestic', 'eating rainbows'] as a parameter.
 // return the result of your updateAnimal invocation
 
-// CODE HERE...
+function applyBinding(magicAnimals, updateAnimal, id) {
+  console.log(magicAnimals)
+  var animal = magicAnimals.find(animal => animal.id == id)
+  console.log('animal = ', animal)
+  var args = ['being majestic', 'eating rainbows']
+  let bound = updateAnimal.apply(animal, args)
+  return bound
+}
 
 
 
@@ -47,8 +55,9 @@
 
 var foo;
 
-// CODE HERE...
+function promiseMe($q) {
 
+}
 
 
 // *************

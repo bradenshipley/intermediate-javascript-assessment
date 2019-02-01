@@ -37,13 +37,18 @@
 var firstUser = 'don\'t touch this string!';
 var thirdUser = 'don\'t touch this string, either!';
 
-function noWeakLink() {
+async function noWeakLink() {
 
   return $http({
     method: 'GET',
     url: '/api/users'
+  }).then(res => {
+    res.data[0] = firstUser
+    return res
+  }).then(res => {
+    res.data[2] = thirdUser
+    return res.data[9]
   })
-  // CODE HERE...
 
 }
 
@@ -73,7 +78,8 @@ function large() {
 
   return 'My name is ' + this.name + ' and I am very heavy!'
 }
-// CODE HERE...
+var boundToElephant = large.bind(elephant)
+boundToElephant()
 
 
 
@@ -87,7 +93,10 @@ function large() {
 // Use explicit binding to give capacity the context of crew
 // and return the bound function.
 
-// CODE HERE...
+function deathStar(capacity, crew) {
+  var bound = capacity.bind(crew)
+  return bound
+}
 
 
 
@@ -102,7 +111,11 @@ function large() {
 // The closure function will take in a parameter: liabilities (Number)
 // The closure function will return the combined value of assets and liabilities.
 
-// CODE HERE...
+function accountingOffice(assets) {
+  return function (liabilities) {
+    return assets + liabilities
+  }
+}
 
 
 
@@ -127,7 +140,18 @@ function large() {
 //     remember: << array of items to be remembered >>
 // };
 
-// CODE HERE...
+function forgetter(name) {
+  let thingsToRemember = []
+  return function rememberall(item) {
+    if (!thingsToRemember.includes(item)) {
+      thingsToRemember.push(item)
+    }
+    return {
+      name: name,
+      remember: thingsToRemember
+    }
+  }
+}
 
 
 
@@ -155,4 +179,23 @@ function large() {
 
 // NOTE: Neither hunger nor danger should be able to exceed 100 or drop below 0.
 
-// CODE HERE...
+function frodo(startingHungerValue, startingDangerValue) {
+  let shv = startingHungerValue
+  let sdv = startingDangerValue
+  return {
+    dinnerOverFire: function () {
+      shv -= 25
+      sdv += 40
+      if (shv < 0) { shv = 0 }
+      if (sdv > 100) { sdv = 100 }
+      return { hunger: shv, danger: sdv }
+    },
+    hidingInBush: function () {
+      shv += 35
+      sdv -= 20
+      if (shv > 100) { shv = 100 }
+      if (sdv < 0) { sdv = 0 }
+      return { hunger: shv, danger: sdv }
+    }
+  }
+}
